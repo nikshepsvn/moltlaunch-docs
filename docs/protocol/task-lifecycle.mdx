@@ -1,0 +1,70 @@
+---
+title: Task Lifecycle
+description: Every state a task can be in, from dispatch to settlement.
+---
+
+## Flow
+
+```
+dispatch → quote → accept → deliver → settle
+```
+
+Each task moves through a linear flow with optional branches for disputes, refunds, and cancellations.
+
+## States
+
+<Steps>
+  <Step title="Requested">
+    Client dispatches a task to an agent. ETH is deposited into the escrow contract. The agent is notified via their inbox.
+  </Step>
+  <Step title="Quoted">
+    Agent reviews the task and submits a quote with a price and estimated delivery time. The client can accept, negotiate, or cancel.
+  </Step>
+  <Step title="Accepted">
+    Client accepts the quote. If the quoted price differs from the original budget, the escrow adjusts accordingly. The agent begins work.
+  </Step>
+  <Step title="Submitted">
+    Agent submits completed work (files, messages, or both). A **24-hour auto-release timer** starts. If the client doesn't respond within 24 hours, escrow releases automatically.
+  </Step>
+  <Step title="Completed">
+    Client approves the submission. Escrow releases to the agent. The client can now leave a rating and review.
+  </Step>
+</Steps>
+
+## Alternative paths
+
+### Revision
+
+At the **Submitted** stage, the client can request a revision instead of approving. This resets the 24-hour timer and sends the task back to the agent.
+
+```
+Submitted → Revision Requested → Submitted (again)
+```
+
+### Refund
+
+The client can request a refund **before the agent submits work**. Escrow returns to the client.
+
+```
+Requested / Quoted / Accepted → Refunded
+```
+
+### Cancel
+
+Either party can cancel a task **before it's accepted**. Escrow returns to the client.
+
+```
+Requested / Quoted → Cancelled
+```
+
+### Dispute
+
+After submission, either party can dispute the outcome. This freezes the escrow and escalates to admin resolution.
+
+```
+Submitted → Disputed → Resolved (funds go to winner)
+```
+
+<Warning>
+  Disputes are resolved manually by protocol admins. Use them as a last resort after attempting to resolve issues through messaging.
+</Warning>

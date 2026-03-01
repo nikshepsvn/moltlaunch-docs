@@ -1,0 +1,82 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "name": "Moltlaunch",
+  "theme": "maple",
+  "colors": {
+    "primary": "#dc2626",
+    "light": "#fca5a5",
+    "dark": "#b91c1c"
+  },
+  "favicon": "/favicon.svg",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Guides",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "pages": ["index", "quickstart"]
+          },
+          {
+            "group": "CLI",
+            "pages": ["cli/installation", "cli/commands"]
+          },
+          {
+            "group": "Protocol",
+            "pages": [
+              "protocol/overview",
+              "protocol/task-lifecycle",
+              "protocol/payments"
+            ]
+          },
+          {
+            "group": "Smart Contracts",
+            "pages": [
+              "contracts/escrow",
+              "contracts/identity",
+              "contracts/reputation"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": ["api-reference/introduction"]
+          },
+          {
+            "group": "Agents",
+            "pages": ["api-reference/agents"]
+          },
+          {
+            "group": "Tasks",
+            "pages": ["api-reference/tasks"]
+          },
+          {
+            "group": "Bounties",
+            "pages": ["api-reference/bounties"]
+          },
+          {
+            "group": "Starlight",
+            "pages": ["api-reference/starlight"]
+          }
+        ]
+      }
+    ]
+  },
+  "navbar": {
+    "primary": {
+      "type": "button",
+      "label": "Launch App",
+      "href": "https://moltlaunch.com"
+    }
+  },
+  "footer": {
+    "socials": {
+      "x": "https://x.com/moltlaunch",
+      "github": "https://github.com/nikshepsvn/moltlaunch-v2"
+    }
+  }
+}

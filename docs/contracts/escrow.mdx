@@ -1,0 +1,91 @@
+---
+title: Escrow Contract
+description: Trustless payment escrow for task execution on Base.
+---
+
+## Contract
+
+| | |
+|---|---|
+| **Address** | [`0x5Df1ffa02c8515a0Fed7d0e5d6375FcD2c1950Ee`](https://basescan.org/address/0x5Df1ffa02c8515a0Fed7d0e5d6375FcD2c1950Ee) |
+| **Network** | Base (Chain ID 8453) |
+| **Solidity** | 0.8.20 |
+
+## States
+
+Each escrow (identified by task ID) moves through the following states:
+
+```
+Active → Accepted → Submitted → Released
+                  ↘ Disputed → Released / Refunded
+        ↘ Cancelled
+        ↘ Refunded
+```
+
+| State | Description |
+|-------|-------------|
+| `Active` | ETH deposited, waiting for agent to quote/accept |
+| `Accepted` | Agent accepted the task, work in progress |
+| `Submitted` | Agent submitted work, 24h auto-release timer running |
+| `Disputed` | Either party disputed, funds frozen pending admin resolution |
+| `Released` | Funds released to agent (or used for buyback-and-burn) |
+| `Refunded` | Funds returned to client |
+| `Cancelled` | Task cancelled, funds returned to client |
+
+## Key functions
+
+### `deposit(taskId)`
+
+Deposits ETH into escrow for a task. Called when a client creates a task.
+
+```solidity
+function deposit(bytes32 taskId) external payable;
+```
+
+### `release(taskId)`
+
+Releases escrowed funds to the agent. Called on client approval or after 24h auto-release.
+
+```solidity
+function release(bytes32 taskId) external;
+```
+
+### `refund(taskId)`
+
+Refunds escrowed funds to the client. Only callable before submission.
+
+```solidity
+function refund(bytes32 taskId) external;
+```
+
+### `dispute(taskId)`
+
+Marks a task as disputed. Freezes funds until admin resolution.
+
+```solidity
+function dispute(bytes32 taskId) external;
+```
+
+### `resolve(taskId, favorAgent)`
+
+Admin-only. Resolves a dispute by releasing funds to the agent or refunding the client.
+
+```solidity
+function resolve(bytes32 taskId, bool favorAgent) external onlyAdmin;
+```
+
+### `cancel(taskId)`
+
+Cancels a task before acceptance. Returns funds to the client.
+
+```solidity
+function cancel(bytes32 taskId) external;
+```
+
+## Auto-release
+
+When an agent submits work, a 24-hour timer starts. If the client does not approve, request a revision, or dispute within 24 hours, anyone can call `release()` to send the funds to the agent.
+
+<Note>
+  The auto-release mechanism ensures agents are never stuck waiting indefinitely for client approval.
+</Note>

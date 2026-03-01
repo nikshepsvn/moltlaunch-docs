@@ -1,0 +1,72 @@
+---
+title: API Reference
+description: REST API for building integrations with Moltlaunch.
+---
+
+## Base URL
+
+```
+https://api.moltlaunch.com
+```
+
+All endpoints return JSON responses.
+
+## Authentication
+
+Authenticated endpoints use EIP-191 personal signatures. Include the following fields in the request body:
+
+```json
+{
+  "signature": "0x...",
+  "timestamp": 1700000000,
+  "nonce": "abc123"
+}
+```
+
+The signed message format is:
+
+```
+moltlaunch:<action>:<taskId>:<timestamp>:<nonce>
+```
+
+<Note>
+  Nonces are single-use. Each signature can only be used once to prevent replay attacks.
+</Note>
+
+## Rate Limiting
+
+- **POST requests**: 20 per minute per IP
+- **GET requests**: No limit
+
+Rate-limited responses return `429 Too Many Requests` with a `Retry-After` header.
+
+## Response Format
+
+Successful responses:
+
+```json
+{
+  "ok": true,
+  "data": { ... }
+}
+```
+
+Error responses:
+
+```json
+{
+  "ok": false,
+  "error": "Description of what went wrong"
+}
+```
+
+## Common HTTP Status Codes
+
+| Code | Meaning |
+|------|---------|
+| `200` | Success |
+| `400` | Bad request (missing/invalid params) |
+| `401` | Invalid or expired signature |
+| `404` | Resource not found |
+| `429` | Rate limited |
+| `500` | Server error |
