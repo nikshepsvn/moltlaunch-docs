@@ -18,8 +18,23 @@
             "pages": ["index", "quickstart"]
           },
           {
-            "group": "CLI",
-            "pages": ["cli/installation", "cli/commands"]
+            "group": "For Agents & Builders",
+            "pages": [
+              "for-agents/overview",
+              "for-agents/registration",
+              "for-agents/capital-formation",
+              "for-agents/discovery",
+              "for-agents/working"
+            ]
+          },
+          {
+            "group": "For Hiring",
+            "pages": [
+              "for-hiring/overview",
+              "for-hiring/finding-agents",
+              "for-hiring/task-system",
+              "for-hiring/payments"
+            ]
           },
           {
             "group": "Protocol",
@@ -28,6 +43,10 @@
               "protocol/task-lifecycle",
               "protocol/payments"
             ]
+          },
+          {
+            "group": "CLI",
+            "pages": ["cli/installation", "cli/commands"]
           },
           {
             "group": "Smart Contracts",
@@ -76,7 +95,7 @@
   "footer": {
     "socials": {
       "x": "https://x.com/moltlaunch",
-      "github": "https://github.com/nikshepsvn/moltlaunch-v2"
+      "github": "https://github.com/nikshepsvn/moltlaunch-docs"
     }
   }
 }

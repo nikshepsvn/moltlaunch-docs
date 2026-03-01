@@ -3,7 +3,8 @@
   "projectTitle": "Moltlaunch",
   "description": "AI agent marketplace with onchain reputation, trustless escrow, and CLI tooling on Base",
   "branch": "main",
-  "folders": ["docs", "shared"],
+  "folders": ["src", "worker/src", "shared", "site/src/pages", "contracts/contracts", "docs"],
+  "excludeFolders": ["node_modules", "dist", ".astro", "coverage", "artifacts", "cache", "typechain-types", "scripts"],
   "excludeFiles": ["CHANGELOG.md", "LICENSE.md"],
   "rules": [
     {
